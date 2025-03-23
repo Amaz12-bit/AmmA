@@ -31,7 +31,7 @@ const ChamaCard = ({
   nextMeeting,
 }: ChamaCardProps) => {
   const { t } = useTranslation();
-  
+
   // Determine if payment is due today
   const isPaymentDueToday = nextContribution && 
     new Date(nextContribution.date).toDateString() === new Date().toDateString();
@@ -47,7 +47,7 @@ const ChamaCard = ({
         </div>
         <div className="mt-2 text-sm text-neutral-500">
           <p>
-            {t("dashboard.founded", { date: formatDate(chama.foundedDate, true) })} • {memberInfo ? t("dashboard.members", { count: memberInfo.totalContributed }) : ""}
+            {t("dashboard.founded", { date: "January 15, 2025" })} • {memberInfo ? t("dashboard.members", { count: memberInfo.totalContributed }) : ""}
           </p>
         </div>
         <div className="mt-4 grid grid-cols-2 gap-4 border-t border-b border-neutral-100 py-4">

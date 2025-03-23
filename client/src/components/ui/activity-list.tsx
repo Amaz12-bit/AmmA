@@ -11,10 +11,10 @@ interface ActivityListProps {
 
 const ActivityList = ({ activities, isLoading, limit, onViewMore }: ActivityListProps) => {
   const { t } = useTranslation();
-  
+
   // Display a limited number of activities if limit is provided
   const displayActivities = limit ? activities.slice(0, limit) : activities;
-  
+
   // Loading skeleton
   if (isLoading) {
     return (
@@ -39,7 +39,7 @@ const ActivityList = ({ activities, isLoading, limit, onViewMore }: ActivityList
       </div>
     );
   }
-  
+
   // Empty state
   if (!activities || activities.length === 0) {
     return (
@@ -58,7 +58,7 @@ const ActivityList = ({ activities, isLoading, limit, onViewMore }: ActivityList
           const statusColor = getStatusColor(activity.status);
           const icon = getTransactionIcon(activity.type);
           const isIncome = ["contribution", "dividend"].includes(activity.type.toLowerCase());
-          
+
           return (
             <li key={activity.id} className="px-5 py-4 hover:bg-neutral-50">
               <div className="flex items-center space-x-4">
@@ -92,7 +92,7 @@ const ActivityList = ({ activities, isLoading, limit, onViewMore }: ActivityList
           );
         })}
       </ul>
-      
+
       {limit && activities.length > limit && onViewMore && (
         <div className="bg-neutral-50 px-5 py-3">
           <div className="text-sm">
