@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "@/i18n";
 import { useAuth } from "@/hooks/use-auth";
 import { Link, useLocation } from "wouter";
-import { LineChart } from "lucide-react";
+import { Eye, EyeOff, User, Mail, Lock } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -12,13 +12,14 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { insertUserSchema } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
+import { FcGoogle } from "react-icons/fc";
+import { SiApple } from "react-icons/si";
+import { FaFacebookF } from "react-icons/fa";
 
 const registerFormSchema = insertUserSchema.extend({
   confirmPassword: z.string().min(1, {
@@ -72,180 +73,235 @@ const Register = () => {
     setIsSubmitting(false);
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+  
   return (
-    <div className="py-12 px-4 bg-neutral-50">
-      <div className="max-w-md mx-auto space-y-8">
-        <div className="text-center">
-          <div className="flex justify-center items-center mb-2">
-            <LineChart className="h-8 w-8 text-primary-700" />
-          </div>
-          <h2 className="mt-2 text-3xl font-bold font-heading text-neutral-800">
-            {t("auth.register")}
-          </h2>
-          <p className="mt-2 text-sm text-neutral-600">
-            {t("auth.haveAccount")}{" "}
-            <Link href="/login">
-              <a className="font-medium text-primary hover:text-primary-dark">
-                {t("auth.loginNow")}
-              </a>
-            </Link>
-          </p>
+    <div className="min-h-screen px-4 py-6 bg-background flex flex-col">
+      <div className="max-w-md mx-auto w-full flex-1 flex flex-col">
+        <div className="mb-8 mt-16 text-center">
+          <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
         </div>
         
-        <Card>
-          <CardHeader>
-            <CardTitle>{t("auth.createAccount")}</CardTitle>
-            <CardDescription>
-              Fill in your details to create an account
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  <FormField
-                    control={form.control}
-                    name="firstName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("auth.firstName")}</FormLabel>
-                        <FormControl>
-                          <Input 
-                            placeholder="John" 
-                            {...field} 
-                            disabled={isSubmitting}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="lastName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("auth.lastName")}</FormLabel>
-                        <FormControl>
-                          <Input 
-                            placeholder="Doe" 
-                            {...field} 
-                            disabled={isSubmitting}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("auth.email")}</FormLabel>
-                      <FormControl>
-                        <Input 
-                          type="email" 
-                          placeholder="john.doe@example.com" 
-                          {...field} 
-                          disabled={isSubmitting}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="phoneNumber"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("auth.phoneNumber")}</FormLabel>
-                      <FormControl>
-                        <Input 
-                          placeholder="+254712345678" 
-                          {...field} 
-                          disabled={isSubmitting}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("auth.username")}</FormLabel>
-                      <FormControl>
-                        <Input 
-                          placeholder="johndoe" 
-                          {...field} 
-                          disabled={isSubmitting}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("auth.password")}</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="password" 
-                            placeholder="••••••••" 
-                            {...field} 
-                            disabled={isSubmitting}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="confirmPassword"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("auth.confirmPassword")}</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="password" 
-                            placeholder="••••••••" 
-                            {...field} 
-                            disabled={isSubmitting}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                
-                {error && (
-                  <div className="text-sm text-error bg-error bg-opacity-10 p-3 rounded-md">
-                    {error}
-                  </div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="relative">
+                      <div className="absolute left-3 top-3 text-gray-400">
+                        <User size={20} />
+                      </div>
+                      <Input 
+                        className="pl-10 h-12 bg-muted rounded-md"
+                        placeholder="Enter your username" 
+                        {...field} 
+                        disabled={isSubmitting}
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="relative">
+                      <div className="absolute left-3 top-3 text-gray-400">
+                        <Mail size={20} />
+                      </div>
+                      <Input 
+                        className="pl-10 h-12 bg-muted rounded-md"
+                        type="email" 
+                        placeholder="Enter your email address" 
+                        {...field} 
+                        disabled={isSubmitting}
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="relative">
+                      <div className="absolute left-3 top-3 text-gray-400">
+                        <Lock size={20} />
+                      </div>
+                      <Input 
+                        className="pl-10 pr-10 h-12 bg-muted rounded-md"
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Enter your password" 
+                        {...field} 
+                        disabled={isSubmitting}
+                      />
+                      <button 
+                        type="button"
+                        className="absolute right-3 top-3 text-gray-400"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      </button>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <div className="hidden">
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input 
+                        type="password"
+                        {...field} 
+                        value={field.value || form.getValues().password}
+                      />
+                    </FormControl>
+                  </FormItem>
                 )}
-                
-                <Button type="submit" className="w-full" disabled={isSubmitting}>
-                  {isSubmitting ? t("common.loading") : t("auth.register")}
-                </Button>
-              </form>
-            </Form>
-          </CardContent>
-        </Card>
+              />
+              
+              <FormField
+                control={form.control}
+                name="firstName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input {...field} value={field.value || "First"} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input {...field} value={field.value || "Last"} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="phoneNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input {...field} value={field.value || "+254700000000"} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="preferredLanguage"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input {...field} value={field.value || "en"} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+            
+            {error && (
+              <div className="text-sm text-error bg-error/10 p-3 rounded-md">
+                {error}
+              </div>
+            )}
+            
+            <div className="flex items-center justify-center text-sm text-gray-500">
+              <span className="relative flex-grow h-px bg-muted"></span>
+              <span className="mx-2">Or</span>
+              <span className="relative flex-grow h-px bg-muted"></span>
+            </div>
+            
+            <div className="flex justify-center space-x-4">
+              <button
+                type="button"
+                className="w-14 h-14 rounded-md flex items-center justify-center border border-muted"
+                onClick={() => {
+                  toast({
+                    title: "Social Login",
+                    description: "Google login is not available yet",
+                  });
+                }}
+              >
+                <FcGoogle size={24} />
+              </button>
+              <button
+                type="button"
+                className="w-14 h-14 rounded-md flex items-center justify-center border border-muted"
+                onClick={() => {
+                  toast({
+                    title: "Social Login",
+                    description: "Apple login is not available yet",
+                  });
+                }}
+              >
+                <SiApple size={24} />
+              </button>
+              <button
+                type="button"
+                className="w-14 h-14 rounded-md flex items-center justify-center border border-muted"
+                onClick={() => {
+                  toast({
+                    title: "Social Login",
+                    description: "Facebook login is not available yet",
+                  });
+                }}
+              >
+                <FaFacebookF size={24} className="text-blue-600" />
+              </button>
+            </div>
+            
+            <p className="text-xs text-center text-gray-500">
+              By signing up, you agree to our{" "}
+              <Link href="/terms" className="text-primary">
+                Terms of Service and Privacy Policy.
+              </Link>
+            </p>
+            
+            <Button 
+              type="submit" 
+              className="w-full h-14 text-white rounded-full bg-primary hover:bg-primary/90"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? t("common.loading") : "Sign Up"}
+            </Button>
+            
+            <p className="text-center text-sm text-gray-500">
+              Already have an account?{" "}
+              <Link href="/login" className="text-primary font-medium">
+                Sign In
+              </Link>
+            </p>
+          </form>
+        </Form>
       </div>
     </div>
   );
