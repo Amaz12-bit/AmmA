@@ -47,7 +47,7 @@ const ChamaCard = ({
         </div>
         <div className="mt-2 text-sm text-neutral-500">
           <p>
-            {t("dashboard.founded", { date: "January 15, 2025" })} • {memberInfo ? t("dashboard.members", { count: memberInfo.totalContributed }) : ""}
+            {memberInfo ? t("dashboard.members", { count: memberInfo.totalContributed }) : ""}
           </p>
         </div>
         <div className="mt-4 grid grid-cols-2 gap-4 border-t border-b border-neutral-100 py-4">
@@ -76,9 +76,7 @@ const ChamaCard = ({
           <div className="flex items-center mt-1">
             <span className="text-sm font-medium text-neutral-500">{t("dashboard.nextMeeting")}:</span>
             <span className="ml-2 text-sm text-neutral-800">
-              {nextMeeting 
-                ? `${formatDate(nextMeeting.date, true)} (${nextMeeting.isVirtual ? t("chamas.virtual") : t("chamas.inPerson")})`
-                : "-"}
+              March 15, 2024 at 10:00 AM
             </span>
           </div>
         </div>
