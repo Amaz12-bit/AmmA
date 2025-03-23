@@ -128,10 +128,10 @@ export class MemStorage implements IStorage {
       foundedDate: new Date("2025-01-15"),
       regularContributionAmount: 5000,
       contributionFrequency: "monthly",
-      ownerId: createdUser.id,
+      ownerId: demoUser.id,
       totalValue: 1200000,
     };
-    const createdChama1 = this.createChama(chama1);
+    const createdChama1 = await this.createChama(chama1);
     
     const chama2: InsertChama = {
       name: "Maendeleo Savings Club",
@@ -139,10 +139,10 @@ export class MemStorage implements IStorage {
       foundedDate: new Date("2025-03-10"),
       regularContributionAmount: 8000,
       contributionFrequency: "monthly",
-      ownerId: createdUser.id,
+      ownerId: demoUser.id,
       totalValue: 520000,
     };
-    const createdChama2 = this.createChama(chama2);
+    const createdChama2 = await this.createChama(chama2);
     
     const chama3: InsertChama = {
       name: "Pamoja Real Estate Group",
@@ -150,7 +150,7 @@ export class MemStorage implements IStorage {
       foundedDate: new Date("2025-01-05"),
       regularContributionAmount: 10000,
       contributionFrequency: "monthly",
-      ownerId: createdUser.id,
+      ownerId: demoUser.id,
       totalValue: 1500000,
     };
     const createdChama3 = this.createChama(chama3);
