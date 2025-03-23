@@ -120,7 +120,7 @@ export class MemStorage implements IStorage {
     const chama1: InsertChama = {
       name: "Umoja Investment Group",
       description: "A group focused on real estate investments in Kenya",
-      foundedDate: new Date("2022-01-15"),
+      foundedDate: new Date("2025-01-15"),
       regularContributionAmount: 5000,
       contributionFrequency: "monthly",
       ownerId: createdUser.id,
@@ -131,7 +131,7 @@ export class MemStorage implements IStorage {
     const chama2: InsertChama = {
       name: "Maendeleo Savings Club",
       description: "A savings club focusing on member loans and financial support",
-      foundedDate: new Date("2021-03-10"),
+      foundedDate: new Date("2025-03-10"),
       regularContributionAmount: 8000,
       contributionFrequency: "monthly",
       ownerId: createdUser.id,
@@ -142,7 +142,7 @@ export class MemStorage implements IStorage {
     const chama3: InsertChama = {
       name: "Pamoja Real Estate Group",
       description: "Group focusing on property investments in Kenya",
-      foundedDate: new Date("2022-11-05"),
+      foundedDate: new Date("2025-01-05"),
       regularContributionAmount: 10000,
       contributionFrequency: "monthly",
       ownerId: createdUser.id,
@@ -155,7 +155,7 @@ export class MemStorage implements IStorage {
       userId: createdUser.id,
       chamaId: createdChama1.id,
       role: "admin",
-      joinedDate: new Date("2022-01-15"),
+      joinedDate: new Date("2025-01-15"),
       totalContributed: 85000,
       isActive: true,
     };
@@ -165,7 +165,7 @@ export class MemStorage implements IStorage {
       userId: createdUser.id,
       chamaId: createdChama2.id,
       role: "admin",
-      joinedDate: new Date("2021-03-10"),
+      joinedDate: new Date("2025-03-10"),
       totalContributed: 60000,
       isActive: true,
     };
@@ -175,7 +175,7 @@ export class MemStorage implements IStorage {
       userId: createdUser.id,
       chamaId: createdChama3.id,
       role: "admin",
-      joinedDate: new Date("2022-11-05"),
+      joinedDate: new Date("2025-01-05"),
       totalContributed: 100000,
       isActive: true,
     };
@@ -201,7 +201,7 @@ export class MemStorage implements IStorage {
       amount: 10000,
       type: "contribution",
       status: "completed",
-      date: new Date("2023-08-02"),
+      date: new Date("2025-03-02"),
       paymentMethod: "mpesa",
       description: "Monthly contribution",
       referenceNumber: "MPESA123457",
@@ -214,7 +214,7 @@ export class MemStorage implements IStorage {
       amount: 15000,
       type: "loan",
       status: "completed",
-      date: new Date("2023-08-05"),
+      date: new Date("2025-03-05"),
       paymentMethod: "bank",
       description: "Loan disbursement",
       referenceNumber: "BANK123458",
@@ -225,7 +225,7 @@ export class MemStorage implements IStorage {
     const meeting1: InsertMeeting = {
       chamaId: createdChama2.id,
       title: "August Monthly Meeting",
-      date: new Date("2023-08-18T18:00:00"),
+      date: new Date("2025-04-18T18:00:00"),
       location: "Zoom",
       isVirtual: true,
       meetingLink: "https://zoom.us/j/123456789",
@@ -237,7 +237,7 @@ export class MemStorage implements IStorage {
     const meeting2: InsertMeeting = {
       chamaId: createdChama1.id,
       title: "Investment Review Meeting",
-      date: new Date("2023-08-22T19:30:00"),
+      date: new Date("2025-04-22T19:30:00"),
       location: "Google Meet",
       isVirtual: true,
       meetingLink: "https://meet.google.com/abc-defg-hij",
