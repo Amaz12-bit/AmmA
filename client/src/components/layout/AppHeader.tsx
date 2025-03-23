@@ -87,9 +87,7 @@ const AppHeader = () => {
                   {t("common.appName")}
                 </span>
               </Link>
-              <div className="hidden md:flex ml-4 items-center px-2 py-1 bg-primary-50 text-primary rounded text-xs">
-                <span>{t("common.beta")}</span>
-              </div>
+              
             </div>
           </div>
 
