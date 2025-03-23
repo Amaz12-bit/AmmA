@@ -38,6 +38,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   passport.use(
     new LocalStrategy(async (username, password, done) => {
       try {
+        // Check for demo credentials
+        if (username === "AssetAlign" && password === "123") {
+          return done(null, {
+            id: 1,
+            username: "AssetAlign",
+            email: "demo@assetalign.com",
+            name: "Demo User"
+          });
+        }
+        
         const user = await storage.getUserByUsername(username);
         if (!user) {
           return done(null, false, { message: "Incorrect username." });
