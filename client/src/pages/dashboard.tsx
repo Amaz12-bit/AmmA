@@ -258,8 +258,8 @@ const Dashboard = () => {
                 {t("dashboard.recentActivity")}
               </h2>
               <p className="text-sm text-neutral-500 mt-1">
-                {data?.recentActivities?.[0]?.date ? (
-                  `Last login: ${new Date(data.recentActivities[0].date).toLocaleString()}`
+                {dashboardData?.recentActivities?.[0]?.date ? (
+                  `Last login: ${new Date(dashboardData.recentActivities[0].date).toLocaleString()}`
                 ) : 'First login'}
               </p>
             </div>
