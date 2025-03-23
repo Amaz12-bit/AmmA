@@ -74,10 +74,8 @@ const Login = () => {
           </h2>
           <p className="mt-2 text-sm text-neutral-600">
             {t("auth.noAccount")}{" "}
-            <Link href="/register">
-              <a className="font-medium text-primary hover:text-primary-dark">
-                {t("auth.registerNow")}
-              </a>
+            <Link href="/register" className="font-medium text-primary hover:text-primary-dark">
+              {t("auth.registerNow")}
             </Link>
           </p>
         </div>
@@ -139,10 +137,8 @@ const Login = () => {
             </Form>
           </CardContent>
           <CardFooter className="flex justify-center">
-            <Link href="/forgot-password">
-              <a className="text-sm text-neutral-600 hover:text-primary">
-                {t("auth.forgotPassword")}
-              </a>
+            <Link href="/forgot-password" className="text-sm text-neutral-600 hover:text-primary">
+              {t("auth.forgotPassword")}
             </Link>
           </CardFooter>
         </Card>

@@ -1,6 +1,32 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Brand colors */
+  --primary: #1D6F76;
+  --primary-dark: #155358;
+  --primary-light: #2A8D96;
+  --secondary: #F2994A;
+  --secondary-dark: #D97B2C;
+  --secondary-light: #FFB675;
+  
+  /* Neutral colors */
+  --white: #FFFFFF;
+  --light-gray: #F5F7FA;
+  --medium-gray: #E0E4E8;
+  --dark-gray: #4A5568;
+  
+  /* Accent colors */
+  --success: #27AE60;
+  --warning: #F2C94C;
+  --error: #EB5757;
+}
 
 @layer base {
   * {
@@ -8,6 +34,17 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply bg-white text-gray-800 antialiased;
+    font-family: 'Work Sans', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+  }
+
+  /* Financial numbers and data */
+  .number-font {
+    font-family: 'DM Mono', monospace;
   }
 }

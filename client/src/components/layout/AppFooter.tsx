@@ -8,20 +8,14 @@ const AppFooter = () => {
     <footer className="bg-white border-t border-neutral-200">
       <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex justify-center md:justify-start space-x-6">
-          <Link href="/terms">
-            <a className="text-sm text-neutral-500 hover:text-neutral-600">
-              {t("footer.terms")}
-            </a>
+          <Link href="/terms" className="text-sm text-neutral-500 hover:text-neutral-600">
+            {t("footer.terms")}
           </Link>
-          <Link href="/privacy">
-            <a className="text-sm text-neutral-500 hover:text-neutral-600">
-              {t("footer.privacy")}
-            </a>
+          <Link href="/privacy" className="text-sm text-neutral-500 hover:text-neutral-600">
+            {t("footer.privacy")}
           </Link>
-          <Link href="/help">
-            <a className="text-sm text-neutral-500 hover:text-neutral-600">
-              {t("footer.helpCenter")}
-            </a>
+          <Link href="/help" className="text-sm text-neutral-500 hover:text-neutral-600">
+            {t("footer.helpCenter")}
           </Link>
         </div>
         <div className="mt-4 md:mt-0">
