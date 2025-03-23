@@ -4,6 +4,9 @@ import { useAuth } from "@/hooks/use-auth";
 import { Link, useLocation } from "wouter";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
+import { SiApple } from "react-icons/si";
+import { FaFacebookF } from "react-icons/fa";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 
@@ -43,6 +46,7 @@ const Login = () => {
       toast({
         title: "Login Successful",
         description: "Welcome back to AssetAlign!",
+        duration: 800,
       });
       navigate("/");
     }
@@ -108,14 +112,14 @@ const Login = () => {
           <div className="text-sm text-gray-500">Or</div>
 
           <div className="flex justify-center space-x-4">
-            <button type="button" className="p-2 rounded-lg border">
-              <img src="/images/google.svg" alt="Google" className="h-6 w-6" />
+            <button type="button" className="w-14 h-14 rounded-md flex items-center justify-center border border-gray-200 bg-white">
+              <FcGoogle size={24} />
             </button>
-            <button type="button" className="p-2 rounded-lg border">
-              <img src="/images/apple.svg" alt="Apple" className="h-6 w-6" />
+            <button type="button" className="w-14 h-14 rounded-md flex items-center justify-center border border-gray-200 bg-white">
+              <SiApple size={24} />
             </button>
-            <button type="button" className="p-2 rounded-lg border">
-              <img src="/images/facebook.svg" alt="Facebook" className="h-6 w-6" />
+            <button type="button" className="w-14 h-14 rounded-md flex items-center justify-center border border-gray-200 bg-white">
+              <FaFacebookF size={24} className="text-blue-600" />
             </button>
           </div>
         </div>

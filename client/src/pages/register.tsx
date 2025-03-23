@@ -66,6 +66,7 @@ const Register = () => {
       toast({
         title: "Registration Successful",
         description: "Welcome to AssetAlign! Your account has been created.",
+        duration: 800,
       });
       navigate("/");
     }
