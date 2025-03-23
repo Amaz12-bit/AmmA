@@ -167,23 +167,47 @@ const Register = () => {
                 )}
               />
 
-              <div className="hidden">
-                <FormField
-                  control={form.control}
-                  name="confirmPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative">
+                        <div className="absolute left-3 top-3 text-gray-400">
+                          <Lock size={20} />
+                        </div>
                         <Input
-                          type="password"
+                          className="pl-10 pr-10 h-12 bg-[#f5f5f2] rounded-md border-0" //Removed border
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Confirm Password"
                           {...field}
-                          value={field.value || form.getValues().password}
+                          disabled={isSubmitting}
                         />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
+                        <button
+                          type="button"
+                          className="absolute right-3 top-3 text-gray-400"
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
+
+              <Button
+                type="submit"
+                className="w-full h-14 text-white rounded-full bg-[#10B981] hover:bg-[#0D9668] transition-colors duration-200 transform hover:scale-[1.02]"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? t("common.loading") : "Sign Up"}
+              </Button>
+
+              <div className="hidden"> {/* Keeping other fields hidden as per original code */}
                 <FormField
                   control={form.control}
                   name="firstName"
@@ -290,14 +314,6 @@ const Register = () => {
                   Terms of Service and Privacy Policy.
                 </Link>
               </p>
-
-              <Button
-                type="submit"
-                className="w-full h-14 text-white rounded-full bg-[#10B981] hover:bg-[#0D9668] transition-colors duration-200 transform hover:scale-[1.02]"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? t("common.loading") : "Sign Up"}
-              </Button>
 
               <p className="text-center text-sm text-gray-500">
                 Already have an account?{" "}
