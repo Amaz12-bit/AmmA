@@ -4,6 +4,17 @@ import { useTranslation } from "@/i18n";
 import { Button } from "@/components/ui/button";
 import { Calendar, CalendarDays, DollarSign } from "lucide-react";
 
+interface ScheduleItem {
+  id: number;
+  date: string;
+  title: string;
+  type: 'meeting' | 'contribution';
+  details?: {
+    location?: string;
+    amount?: number;
+  };
+}
+
 interface ScheduleListProps {
   schedule: {
     today: ScheduleItem[];
@@ -15,7 +26,7 @@ interface ScheduleListProps {
 
 const ScheduleList = ({ schedule, isLoading }: ScheduleListProps) => {
   const { t } = useTranslation();
-  
+
   // Loading skeleton
   if (isLoading) {
     return (
@@ -42,7 +53,7 @@ const ScheduleList = ({ schedule, isLoading }: ScheduleListProps) => {
       </div>
     );
   }
-  
+
   // Empty state for the entire schedule
   if ((!schedule.today || schedule.today.length === 0) && 
       (!schedule.thisWeek || schedule.thisWeek.length === 0) && 
@@ -115,7 +126,7 @@ const ScheduleItemComponent = ({ item }: { item: ScheduleItem }) => {
   const itemDate = new Date(item.date);
   const isMeeting = item.type === "meeting";
   const isContribution = item.type === "contribution";
-  
+
   const getActionButton = () => {
     if (isMeeting) {
       return (
@@ -151,8 +162,8 @@ const ScheduleItemComponent = ({ item }: { item: ScheduleItem }) => {
           <p className="text-sm font-medium text-neutral-800">{item.title}</p>
           <p className="mt-1 text-sm text-neutral-500">
             {formatDate(item.date)} • {formatTime(item.date)}
-            {isMeeting && item.details.location && ` • ${item.details.location}`}
-            {isContribution && item.details.amount && ` • ${t("common.amount")}: KES ${item.details.amount.toLocaleString()}`}
+            {isMeeting && item.details?.location && ` • ${item.details.location}`}
+            {isContribution && item.details?.amount && ` • ${t("common.amount")}: KES ${item.details.amount.toLocaleString()}`}
           </p>
         </div>
         <div>
