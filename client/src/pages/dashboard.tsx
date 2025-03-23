@@ -86,7 +86,7 @@ const Dashboard = () => {
           </div>
           <div className="pt-1.5">
             <h1 className="text-2xl font-heading font-bold text-neutral-800">
-              {t("common.welcome", { name: user?.firstName || "Guest" })}
+              Welcome back, demouser!
             </h1>
             <p className="text-sm text-neutral-500 mt-1">
               Last login: {new Date(Date.now() - 86400000).toLocaleString()}
