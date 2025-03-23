@@ -70,16 +70,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // User serialization & deserialization
   passport.serializeUser((user: any, done) => {
-    done(null, user.id);
+    done(null, user);
   });
 
-  passport.deserializeUser(async (id: number, done) => {
-    try {
-      const user = await storage.getUser(id);
-      done(null, user);
-    } catch (err) {
-      done(err, null);
-    }
+  passport.deserializeUser((user: any, done) => {
+    done(null, user);
   });
 
   // Authentication Middleware
