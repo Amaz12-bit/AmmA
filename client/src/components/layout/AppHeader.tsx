@@ -81,13 +81,11 @@ const AppHeader = () => {
               <Menu className="h-6 w-6" />
             </button>
             <div className="flex items-center flex-shrink-0 pl-2 md:pl-0">
-              <Link href={user ? "/dashboard" : "/"}>
-                <a className="flex items-center">
-                  <LineChart className="h-6 w-6 text-primary" />
-                  <span className="text-primary font-heading font-bold text-xl ml-2">
-                    {t("common.appName")}
-                  </span>
-                </a>
+              <Link href={user ? "/dashboard" : "/"} className="flex items-center">
+                <LineChart className="h-6 w-6 text-primary" />
+                <span className="text-primary font-heading font-bold text-xl ml-2">
+                  {t("common.appName")}
+                </span>
               </Link>
               <div className="hidden md:flex ml-4 items-center px-2 py-1 bg-primary-50 text-primary rounded text-xs">
                 <span>{t("common.beta")}</span>
@@ -99,16 +97,16 @@ const AppHeader = () => {
           {user && (
             <nav className="hidden lg:flex lg:items-center lg:space-x-2">
               {navigationItems.map((item) => (
-                <Link key={item.href} href={item.href}>
-                  <a
-                    className={`px-3 py-2 rounded-md text-sm font-medium ${
-                      item.active
-                        ? "bg-primary-50 text-primary"
-                        : "text-neutral-600 hover:bg-neutral-100"
-                    }`}
-                  >
-                    {item.label}
-                  </a>
+                <Link 
+                  key={item.href} 
+                  href={item.href}
+                  className={`px-3 py-2 rounded-md text-sm font-medium ${
+                    item.active
+                      ? "bg-primary-50 text-primary"
+                      : "text-neutral-600 hover:bg-neutral-100"
+                  }`}
+                >
+                  {item.label}
                 </Link>
               ))}
             </nav>
@@ -248,17 +246,17 @@ const AppHeader = () => {
         <div className="lg:hidden border-t border-neutral-200">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navigationItems.map((item) => (
-              <Link key={item.href} href={item.href}>
-                <a
-                  className={`block px-3 py-2 rounded-md text-base font-medium ${
-                    item.active
-                      ? "bg-primary-50 text-primary"
-                      : "text-neutral-600 hover:bg-neutral-100"
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
+              <Link 
+                key={item.href} 
+                href={item.href}
+                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                  item.active
+                    ? "bg-primary-50 text-primary" 
+                    : "text-neutral-600 hover:bg-neutral-100"
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item.label}
               </Link>
             ))}
           </div>
@@ -280,15 +278,17 @@ const AppHeader = () => {
               </div>
             </div>
             <div className="mt-3 px-2 space-y-1">
-              <Link href="/profile">
-                <a className="block px-3 py-2 rounded-md text-base font-medium text-neutral-600 hover:bg-neutral-100">
-                  {t("common.profile")}
-                </a>
+              <Link 
+                href="/profile"
+                className="block px-3 py-2 rounded-md text-base font-medium text-neutral-600 hover:bg-neutral-100"
+              >
+                {t("common.profile")}
               </Link>
-              <Link href="/settings">
-                <a className="block px-3 py-2 rounded-md text-base font-medium text-neutral-600 hover:bg-neutral-100">
-                  {t("common.settings")}
-                </a>
+              <Link 
+                href="/settings"
+                className="block px-3 py-2 rounded-md text-base font-medium text-neutral-600 hover:bg-neutral-100"
+              >
+                {t("common.settings")}
               </Link>
               <button
                 className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-neutral-600 hover:bg-neutral-100"
