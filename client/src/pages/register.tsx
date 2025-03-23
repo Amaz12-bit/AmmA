@@ -34,7 +34,7 @@ type RegisterFormValues = z.infer<typeof registerFormSchema>;
 
 const Register = () => {
   const { t } = useTranslation();
-  const { register } = useAuth(); // Removed error and clearError for brevity; may need to be re-added
+  const { register, error } = useAuth();
   const [, navigate] = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
