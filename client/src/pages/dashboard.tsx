@@ -10,13 +10,13 @@ import ActivityList from "@/components/ui/activity-list";
 import ScheduleList from "@/components/ui/schedule-list";
 import InvestmentChart from "@/components/ui/investment-chart";
 import ActionCard from "@/components/ui/action-card";
-import { 
-  Download, 
-  PlusCircle, 
-  Users, 
-  DollarSign, 
-  LineChart, 
-  Calendar 
+import {
+  Download,
+  PlusCircle,
+  Users,
+  DollarSign,
+  LineChart,
+  Calendar
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { getInitials } from "@/lib/utils";
@@ -26,8 +26,46 @@ const Dashboard = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
 
-  // Fetch dashboard data
-  const { data, isLoading } = useQuery<DashboardData>({
+  // Demo data
+  const demoData = {
+    stats: {
+      activeChamasCount: 3,
+      totalContributions: 150000,
+      activeInvestmentsCount: 5,
+      upcomingMeetingsCount: 2
+    },
+    chamas: [
+      { id: 1, name: "Umoja Investment Group", description: "Community investment group", memberCount: 15 },
+      { id: 2, name: "Maendeleo Savings Club", description: "Savings and loans group", memberCount: 20 },
+      { id: 3, name: "Pamoja Real Estate Group", description: "Real estate investment group", memberCount: 25 }
+    ],
+    recentActivities: [
+      { id: 1, type: "contribution", amount: 5000, status: "completed", date: new Date().toISOString(), chamaName: "Umoja Investment Group" },
+      { id: 2, type: "investment", amount: 50000, status: "pending", date: new Date().toISOString(), chamaName: "Pamoja Real Estate Group" }
+    ],
+    upcomingSchedule: {
+      today: [
+        { type: "meeting", chamaName: "Umoja Investment Group", title: "Monthly Planning", date: new Date().toISOString() }
+      ],
+      thisWeek: [
+        { type: "contribution", chamaName: "Maendeleo Savings Club", title: "Weekly Contribution", date: new Date(Date.now() + 86400000).toISOString() }
+      ],
+      nextWeek: []
+    },
+    investmentSummary: {
+      total: 750000,
+      breakdown: {
+        "real estate": 400000,
+        "bonds": 150000,
+        "stocks": 100000,
+        "mutual funds": 75000,
+        "others": 25000
+      }
+    }
+  };
+
+  // Fetch dashboard data.  Uses demoData if isLoading is true
+  const { data: dashboardData = demoData, isLoading } = useQuery<DashboardData>({
     queryKey: ["/api/dashboard"],
   });
 
@@ -48,10 +86,10 @@ const Dashboard = () => {
           </div>
           <div className="pt-1.5">
             <h1 className="text-2xl font-heading font-bold text-neutral-800">
-              {t("common.welcome", { name: user?.firstName || "" })}
+              {t("common.welcome", { name: user?.firstName || "Guest" })}
             </h1>
             <p className="text-sm text-neutral-500 mt-1">
-              {t("common.lastLogin", { time: "Today, 08:45 AM" })}
+              Last login: {new Date(Date.now() - 86400000).toLocaleString()}
             </p>
           </div>
         </div>
@@ -216,15 +254,15 @@ const Dashboard = () => {
         <div className="bg-white overflow-hidden shadow rounded-lg border border-neutral-200">
           <div className="p-5 flex justify-between items-center">
             <div>
-            <h2 className="text-base font-bold text-neutral-800">
-              {t("dashboard.recentActivity")}
-            </h2>
-            <p className="text-sm text-neutral-500 mt-1">
-              {data?.recentActivities?.[0]?.date ? (
-                `Last login: ${new Date(data.recentActivities[0].date).toLocaleString()}`
-              ) : 'First login'}
-            </p>
-          </div>
+              <h2 className="text-base font-bold text-neutral-800">
+                {t("dashboard.recentActivity")}
+              </h2>
+              <p className="text-sm text-neutral-500 mt-1">
+                {data?.recentActivities?.[0]?.date ? (
+                  `Last login: ${new Date(data.recentActivities[0].date).toLocaleString()}`
+                ) : 'First login'}
+              </p>
+            </div>
             <div className="flex space-x-2">
               <Button variant="ghost" size="icon">
                 <RefreshIcon className="h-4 w-4" />
@@ -234,8 +272,8 @@ const Dashboard = () => {
               </Button>
             </div>
           </div>
-          <ActivityList 
-            activities={data?.recentActivities || []} 
+          <ActivityList
+            activities={data?.recentActivities || []}
             isLoading={isLoading}
           />
           <div className="bg-neutral-50 px-5 py-3">
@@ -264,8 +302,8 @@ const Dashboard = () => {
               </Button>
             </div>
           </div>
-          <ScheduleList 
-            schedule={data?.upcomingSchedule || { today: [], thisWeek: [], nextWeek: [] }} 
+          <ScheduleList
+            schedule={data?.upcomingSchedule || { today: [], thisWeek: [], nextWeek: [] }}
             isLoading={isLoading}
           />
           <div className="bg-neutral-50 px-5 py-3">
@@ -284,18 +322,18 @@ const Dashboard = () => {
       <h2 className="text-xl font-heading font-bold text-neutral-800 mt-8 mb-4">
         {t("dashboard.investmentPerformance")}
       </h2>
-      <InvestmentChart 
-        summary={data?.investmentSummary || { 
-          total: 0, 
-          breakdown: { 
-            'real estate': 0, 
-            bonds: 0, 
-            stocks: 0, 
-            'mutual funds': 0, 
-            others: 0 
-          } 
+      <InvestmentChart
+        summary={data?.investmentSummary || {
+          total: 0,
+          breakdown: {
+            'real estate': 0,
+            bonds: 0,
+            stocks: 0,
+            'mutual funds': 0,
+            others: 0
+          }
         }}
-        isLoading={isLoading} 
+        isLoading={isLoading}
       />
 
       {/* Action cards */}

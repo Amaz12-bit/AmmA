@@ -87,7 +87,7 @@ const AppHeader = () => {
                   {t("common.appName")}
                 </span>
               </Link>
-              
+
             </div>
           </div>
 
