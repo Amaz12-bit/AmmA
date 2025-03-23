@@ -6,13 +6,22 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // Format number as currency
-export function formatCurrency(amount: number, currency = "KES"): string {
-  if (amount >= 1000000) {
-    return `${currency} ${(amount / 1000000).toFixed(1)}M`;
-  } else if (amount >= 1000) {
-    return `${currency} ${(amount / 1000).toFixed(1)}K`;
-  } else {
-    return `${currency} ${amount.toLocaleString()}`;
+export function formatCurrency(amount?: number | null, currency = "KES"): string {
+  if (amount === undefined || amount === null) {
+    return `${currency} 0`;
+  }
+  
+  try {
+    if (amount >= 1000000) {
+      return `${currency} ${(amount / 1000000).toFixed(1)}M`;
+    } else if (amount >= 1000) {
+      return `${currency} ${(amount / 1000).toFixed(1)}K`;
+    } else {
+      return `${currency} ${Math.abs(amount).toLocaleString()}`;
+    }
+  } catch (error) {
+    console.error('Error formatting currency:', error);
+    return `${currency} 0`;
   }
 }
 
