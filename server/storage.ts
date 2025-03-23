@@ -157,34 +157,34 @@ export class MemStorage implements IStorage {
     
     // Add user as member to all chamas
     const member1: InsertChamaMember = {
-      userId: createdUser.id,
+      userId: demoUser.id,
       chamaId: createdChama1.id,
       role: "admin",
       joinedDate: new Date("2025-01-15"),
       totalContributed: 85000,
       isActive: true,
     };
-    this.createChamaMember(member1);
+    await this.createChamaMember(member1);
     
     const member2: InsertChamaMember = {
-      userId: createdUser.id,
+      userId: demoUser.id,
       chamaId: createdChama2.id,
       role: "admin",
       joinedDate: new Date("2025-03-10"),
       totalContributed: 60000,
       isActive: true,
     };
-    this.createChamaMember(member2);
+    await this.createChamaMember(member2);
     
     const member3: InsertChamaMember = {
-      userId: createdUser.id,
+      userId: demoUser.id,
       chamaId: createdChama3.id,
       role: "admin",
       joinedDate: new Date("2025-01-05"),
       totalContributed: 100000,
       isActive: true,
     };
-    this.createChamaMember(member3);
+    await this.createChamaMember(member3);
     
     // Create demo transactions
     const transaction1: InsertTransaction = {
