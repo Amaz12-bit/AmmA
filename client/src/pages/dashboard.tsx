@@ -191,7 +191,7 @@ const Dashboard = () => {
                 }}
               />
             ))}
-            
+
             {/* Create new chama card */}
             <Link href="/chamas/create">
               <div className="border-2 border-dashed border-neutral-300 rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-primary-400 transition-colors duration-300 cursor-pointer bg-white h-full">
@@ -215,9 +215,16 @@ const Dashboard = () => {
         {/* Recent Activity */}
         <div className="bg-white overflow-hidden shadow rounded-lg border border-neutral-200">
           <div className="p-5 flex justify-between items-center">
+            <div>
             <h2 className="text-base font-bold text-neutral-800">
               {t("dashboard.recentActivity")}
             </h2>
+            <p className="text-sm text-neutral-500 mt-1">
+              {data?.recentActivities?.[0]?.date ? (
+                `Last login: ${new Date(data.recentActivities[0].date).toLocaleString()}`
+              ) : 'First login'}
+            </p>
+          </div>
             <div className="flex space-x-2">
               <Button variant="ghost" size="icon">
                 <RefreshIcon className="h-4 w-4" />
