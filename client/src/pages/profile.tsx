@@ -50,7 +50,7 @@ type PersonalInfoValues = z.infer<typeof personalInfoSchema>;
 type PasswordValues = z.infer<typeof passwordSchema>;
 type PreferencesValues = z.infer<typeof preferencesSchema>;
 
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar as UserAvatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const Profile = () => {
   const { t, language, changeLanguage } = useTranslation();
