@@ -82,8 +82,8 @@ const AppHeader = () => {
             </button>
             <div className="flex items-center flex-shrink-0 pl-2 md:pl-0">
               <Link href={user ? "/dashboard" : "/"} className="flex items-center">
-                <LineChart className="h-6 w-6 text-primary" />
-                <span className="text-primary font-heading font-bold text-xl ml-2">
+                <LineChart className="h-6 w-6 text-[#10B981]" />
+                <span className="text-[#10B981] font-heading font-bold text-xl ml-2">
                   {t("common.appName")}
                 </span>
               </Link>
