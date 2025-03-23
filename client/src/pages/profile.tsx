@@ -50,7 +50,6 @@ type PersonalInfoValues = z.infer<typeof personalInfoSchema>;
 type PasswordValues = z.infer<typeof passwordSchema>;
 type PreferencesValues = z.infer<typeof preferencesSchema>;
 
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { getInitials } from "@/lib/utils";
 
 const Profile = () => {
