@@ -97,7 +97,7 @@ const Register = () => {
                           <User size={20} />
                         </div>
                         <Input 
-                          className="pl-10 h-12 bg-[#f5f5f2] rounded-md border-0"
+                          className="pl-10 h-12 bg-[#f5f5f2] rounded-md border border-gray-300"
                           placeholder="Enter your username" 
                           {...field} 
                           disabled={isSubmitting}
@@ -120,7 +120,7 @@ const Register = () => {
                           <Mail size={20} />
                         </div>
                         <Input 
-                          className="pl-10 h-12 bg-[#f5f5f2] rounded-md border-0"
+                          className="pl-10 h-12 bg-[#f5f5f2] rounded-md border border-gray-300"
                           type="email" 
                           placeholder="Enter your email address" 
                           {...field} 
@@ -144,7 +144,7 @@ const Register = () => {
                           <Lock size={20} />
                         </div>
                         <Input 
-                          className="pl-10 pr-10 h-12 bg-[#f5f5f2] rounded-md border-0"
+                          className="pl-10 pr-10 h-12 bg-[#f5f5f2] rounded-md border border-gray-300"
                           type={showPassword ? "text" : "password"}
                           placeholder="Enter your password" 
                           {...field} 
@@ -283,7 +283,7 @@ const Register = () => {
               
               <p className="text-xs text-center text-gray-500">
                 By signing up, you agree to our{" "}
-                <Link href="/terms" className="text-primary">
+                <Link href="/terms" className="text-blue-600 hover:text-blue-800">
                   Terms of Service and Privacy Policy.
                 </Link>
               </p>
@@ -298,7 +298,7 @@ const Register = () => {
               
               <p className="text-center text-sm text-gray-500">
                 Already have an account?{" "}
-                <Link href="/login" className="text-primary font-medium">
+                <Link href="/login" className="text-blue-600 hover:text-blue-800 font-medium">
                   Sign In
                 </Link>
               </p>
