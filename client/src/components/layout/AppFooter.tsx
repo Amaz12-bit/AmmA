@@ -20,7 +20,7 @@ const AppFooter = () => {
         </div>
         <div className="mt-4 md:mt-0">
           <p className="text-center text-sm text-neutral-500">
-            {t("footer.copyright")}
+            © 2025 All rights reserved
           </p>
         </div>
         <div className="mt-4 md:mt-0 flex space-x-2 justify-center md:justify-end">
