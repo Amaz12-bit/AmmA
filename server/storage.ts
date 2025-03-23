@@ -99,22 +99,27 @@ export class MemStorage implements IStorage {
     };
     
     // Initialize with demo data
-    this.initializeData();
+    (async () => {
+      await this.initializeData();
+    })();
   }
 
   // Initialize with demo data
-  private initializeData() {
-    // Create a demo user
-    const user: InsertUser = {
-      username: "demo",
-      password: "demo123", // In a real app, this would be hashed
-      email: "demo@example.com",
-      firstName: "Demo",
-      lastName: "User",
-      phoneNumber: "+254712345678",
-      preferredLanguage: "en",
-    };
-    const createdUser = this.createUser(user);
+  private async initializeData() {
+    // Create a demo user if it doesn't exist
+    let demoUser = await this.getUserByUsername("demo");
+    if (!demoUser) {
+      const user: InsertUser = {
+        username: "demo",
+        password: "demo123", // In a real app, this would be hashed
+        email: "demo@example.com",
+        firstName: "Demo",
+        lastName: "User",
+        phoneNumber: "+254712345678",
+        preferredLanguage: "en",
+      };
+      demoUser = await this.createUser(user);
+    }
     
     // Create demo chamas
     const chama1: InsertChama = {
