@@ -9,6 +9,7 @@ import { SiApple } from "react-icons/si";
 import { FaFacebookF } from "react-icons/fa";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
+import { User, Lock, Eye, EyeOff } from "lucide-react";
 
 const loginFormSchema = z.object({
   username: z.string().min(1, {
@@ -26,6 +27,7 @@ const Login = () => {
   const { login, error, clearError } = useAuth();
   const [, navigate] = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<LoginFormValues>({
@@ -61,26 +63,36 @@ const Login = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-sm space-y-6">
         <div className="space-y-4">
           <div className="relative">
+            <div className="absolute left-3 top-3 text-gray-400">
+              <User size={20} />
+            </div>
             <input
               {...form.register("username")}
               type="text"
               placeholder="Enter your username"
-              className="w-full p-3 pl-10 rounded-lg bg-gray-50"
+              className="w-full p-3 pl-10 rounded-lg bg-[#f5f5f2] border-0"
               disabled={isSubmitting}
             />
-            <span className="absolute left-3 top-3.5">👤</span>
           </div>
 
           <div className="relative">
+            <div className="absolute left-3 top-3 text-gray-400">
+              <Lock size={20} />
+            </div>
             <input
               {...form.register("password")}
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
-              className="w-full p-3 pl-10 rounded-lg bg-gray-50"
+              className="w-full p-3 pl-10 pr-10 rounded-lg bg-[#f5f5f2] border-0"
               disabled={isSubmitting}
             />
-            <span className="absolute left-3 top-3.5">🔒</span>
-            <button type="button" className="absolute right-3 top-3.5">👁️</button>
+            <button 
+              type="button" 
+              className="absolute right-3 top-3 text-gray-400"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
           </div>
         </div>
 
