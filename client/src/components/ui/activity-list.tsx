@@ -83,7 +83,9 @@ const ActivityList = ({ activities, isLoading, limit, onViewMore }: ActivityList
                   <p className={`text-sm font-medium ${isIncome ? "text-success" : "text-error"}`}>
                     {isIncome ? "+" : "-"}{formatCurrency(activity.amount)}
                   </p>
-                  <p className="text-xs text-neutral-500">{t(`transactions.${activity.paymentMethod.toLowerCase()}`)}</p>
+                  <p className="text-xs text-neutral-500">
+                      {activity.paymentMethod ? t(`transactions.${activity.paymentMethod.toLowerCase()}`) : t('transactions.unknown')}
+                    </p>
                 </div>
               </div>
             </li>
