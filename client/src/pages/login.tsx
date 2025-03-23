@@ -142,12 +142,6 @@ const Login = () => {
             </Link>
           </CardFooter>
         </Card>
-        
-        <div className="text-center text-sm text-neutral-500">
-          <p>
-            Demo credentials: <span className="font-semibold">johndoe</span> / <span className="font-semibold">password123</span>
-          </p>
-        </div>
       </div>
     </div>
   );
