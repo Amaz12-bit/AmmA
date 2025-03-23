@@ -178,11 +178,30 @@ const Profile = () => {
       {/* Profile header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
         <div className="flex items-center">
-          <Avatar className="h-20 w-20">
-            <AvatarFallback className="bg-primary text-white text-xl">
-              {user ? getInitials(user.firstName, user.lastName) : ""}
-            </AvatarFallback>
-          </Avatar>
+          <div className="relative group">
+            <Avatar className="h-20 w-20">
+              <AvatarImage src={user?.profilePicture} />
+              <AvatarFallback className="bg-primary text-white text-xl">
+                {user ? getInitials(user.firstName, user.lastName) : ""}
+              </AvatarFallback>
+            </Avatar>
+            <label className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white opacity-0 group-hover:opacity-100 rounded-full cursor-pointer transition-opacity">
+              <input 
+                type="file" 
+                accept="image/*"
+                className="hidden"
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const formData = new FormData();
+                    formData.append('profilePicture', file);
+                    await updateUser({ profilePicture: formData });
+                  }
+                }}
+              />
+              <span className="text-sm">Change</span>
+            </label>
+          </div>
           <div className="ml-4">
             <h1 className="text-2xl font-bold font-heading text-neutral-800">
               {user?.firstName} {user?.lastName}

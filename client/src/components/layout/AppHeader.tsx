@@ -191,8 +191,8 @@ const AppHeader = () => {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative">
                       <Avatar className="h-8 w-8">
-                        <AvatarImage src={user.profilePicture} />
-                        <AvatarFallback>
+                        <AvatarImage src={user.profilePicture} alt={`${user.firstName} ${user.lastName}`} />
+                        <AvatarFallback className="bg-primary text-white">
                           {getInitials(user.firstName, user.lastName)}
                         </AvatarFallback>
                       </Avatar>
