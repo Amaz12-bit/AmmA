@@ -50,12 +50,30 @@ type PersonalInfoValues = z.infer<typeof personalInfoSchema>;
 type PasswordValues = z.infer<typeof passwordSchema>;
 type PreferencesValues = z.infer<typeof preferencesSchema>;
 
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { getInitials } from "@/lib/utils";
+
 const Profile = () => {
   const { t, language, changeLanguage } = useTranslation();
   const { user, loading, updateUser } = useAuth();
   const [isUpdatingInfo, setIsUpdatingInfo] = useState(false);
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
   const [isUpdatingPreferences, setIsUpdatingPreferences] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingImage(true);
+    try {
+      const formData = new FormData();
+      formData.append('profilePicture', file);
+      await updateUser({ profilePicture: formData });
+    } finally {
+      setIsUploadingImage(false);
+    }
+  };
 
   // Personal info form
   const personalInfoForm = useForm<PersonalInfoValues>({
@@ -180,7 +198,12 @@ const Profile = () => {
         <div className="flex items-center">
           <div className="relative group">
             <Avatar className="h-20 w-20">
-              <AvatarImage src={user?.profilePicture} />
+              {user?.profilePicture && (
+                <AvatarImage 
+                  src={user.profilePicture} 
+                  alt={`${user.firstName} ${user.lastName}`} 
+                />
+              )}
               <AvatarFallback className="bg-primary text-white text-xl">
                 {user ? getInitials(user.firstName, user.lastName) : ""}
               </AvatarFallback>
@@ -190,16 +213,12 @@ const Profile = () => {
                 type="file" 
                 accept="image/*"
                 className="hidden"
-                onChange={async (e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    const formData = new FormData();
-                    formData.append('profilePicture', file);
-                    await updateUser({ profilePicture: formData });
-                  }
-                }}
+                onChange={handleImageUpload}
+                disabled={isUploadingImage}
               />
-              <span className="text-sm">Change</span>
+              <span className="text-sm">
+                {isUploadingImage ? 'Uploading...' : 'Change'}
+              </span>
             </label>
           </div>
           <div className="ml-4">
