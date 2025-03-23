@@ -189,7 +189,7 @@ export class MemStorage implements IStorage {
     // Create demo transactions
     const transaction1: InsertTransaction = {
       chamaId: createdChama1.id,
-      userId: createdUser.id,
+      userId: demoUser.id,
       amount: 5000,
       type: "contribution",
       status: "completed",
@@ -198,11 +198,11 @@ export class MemStorage implements IStorage {
       description: "Monthly contribution",
       referenceNumber: "MPESA123456",
     };
-    this.createTransaction(transaction1);
+    await this.createTransaction(transaction1);
     
     const transaction2: InsertTransaction = {
       chamaId: createdChama3.id,
-      userId: createdUser.id,
+      userId: demoUser.id,
       amount: 10000,
       type: "contribution",
       status: "completed",
@@ -211,11 +211,11 @@ export class MemStorage implements IStorage {
       description: "Monthly contribution",
       referenceNumber: "MPESA123457",
     };
-    this.createTransaction(transaction2);
+    await this.createTransaction(transaction2);
     
     const transaction3: InsertTransaction = {
       chamaId: createdChama2.id,
-      userId: createdUser.id,
+      userId: demoUser.id,
       amount: 15000,
       type: "loan",
       status: "completed",
@@ -224,7 +224,7 @@ export class MemStorage implements IStorage {
       description: "Loan disbursement",
       referenceNumber: "BANK123458",
     };
-    this.createTransaction(transaction3);
+    await this.createTransaction(transaction3);
     
     // Create demo meetings
     const meeting1: InsertMeeting = {
@@ -235,9 +235,9 @@ export class MemStorage implements IStorage {
       isVirtual: true,
       meetingLink: "https://zoom.us/j/123456789",
       description: "Monthly financial review and planning",
-      createdBy: createdUser.id,
+      createdBy: demoUser.id,
     };
-    this.createMeeting(meeting1);
+    await this.createMeeting(meeting1);
     
     const meeting2: InsertMeeting = {
       chamaId: createdChama1.id,
@@ -247,9 +247,9 @@ export class MemStorage implements IStorage {
       isVirtual: true,
       meetingLink: "https://meet.google.com/abc-defg-hij",
       description: "Review of current investments and future opportunities",
-      createdBy: createdUser.id,
+      createdBy: demoUser.id,
     };
-    this.createMeeting(meeting2);
+    await this.createMeeting(meeting2);
     
     const meeting3: InsertMeeting = {
       chamaId: createdChama3.id,
@@ -259,9 +259,9 @@ export class MemStorage implements IStorage {
       isVirtual: true,
       meetingLink: "https://zoom.us/j/987654321",
       description: "Discussion on potential property acquisitions",
-      createdBy: createdUser.id,
+      createdBy: demoUser.id,
     };
-    this.createMeeting(meeting3);
+    await this.createMeeting(meeting3);
     
     // Create demo investments
     const investment1: InsertInvestment = {
@@ -305,24 +305,24 @@ export class MemStorage implements IStorage {
     
     // Create demo notifications
     const notification1: InsertNotification = {
-      userId: createdUser.id,
+      userId: demoUser.id,
       title: "Payment Reminder",
       message: "Your contribution of KES 8,000 to Maendeleo Savings Club is due today.",
       type: "payment",
       isRead: false,
       linkUrl: "/chamas/2",
     };
-    this.createNotification(notification1);
+    await this.createNotification(notification1);
     
     const notification2: InsertNotification = {
-      userId: createdUser.id,
+      userId: demoUser.id,
       title: "Upcoming Meeting",
       message: "You have a meeting for Maendeleo Savings Club on Aug 18, 2025 at 6:00 PM.",
       type: "meeting",
       isRead: false,
       linkUrl: "/meetings",
     };
-    this.createNotification(notification2);
+    await this.createNotification(notification2);
   }
 
   // User operations
