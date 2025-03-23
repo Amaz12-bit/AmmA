@@ -6,6 +6,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { I18nProvider } from "@/i18n";
 import { useAuth } from "@/hooks/use-auth";
 import { Loader2 } from "lucide-react";
+import { useLocation } from "wouter";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -14,18 +15,22 @@ interface AppLayoutProps {
 // This component handles the layout structure
 const AppLayoutContent = ({ children }: AppLayoutProps) => {
   const { loading } = useAuth();
+  const [location] = useLocation();
+  
+  // Check if the current page is login or register
+  const isAuthPage = location === "/login" || location === "/register";
 
   if (loading) {
     return (
       <div className="flex flex-col min-h-screen">
-        <AppHeader />
+        {(!isAuthPage || (isAuthPage && window.innerWidth >= 768)) && <AppHeader />}
         <main className="flex-1 bg-neutral-50 flex items-center justify-center">
           <div className="text-center">
             <Loader2 className="h-10 w-10 animate-spin text-primary mx-auto" />
             <p className="mt-4 text-lg font-medium text-neutral-600">Loading...</p>
           </div>
         </main>
-        <AppFooter />
+        {(!isAuthPage || (isAuthPage && window.innerWidth >= 768)) && <AppFooter />}
         <OfflineIndicator />
       </div>
     );
@@ -33,11 +38,11 @@ const AppLayoutContent = ({ children }: AppLayoutProps) => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <AppHeader />
+      {(!isAuthPage || (isAuthPage && window.innerWidth >= 768)) && <AppHeader />}
       <main className="flex-1 bg-neutral-50">
         {children}
       </main>
-      <AppFooter />
+      {(!isAuthPage || (isAuthPage && window.innerWidth >= 768)) && <AppFooter />}
       <OfflineIndicator />
     </div>
   );

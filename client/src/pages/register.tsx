@@ -80,7 +80,10 @@ const Register = () => {
       {/* Left Section (Form) */}
       <div className="flex-1 px-4 py-6 bg-[#f8f8f5] flex flex-col min-h-screen md:min-h-0">
         <div className="max-w-md mx-auto w-full flex-1 flex flex-col">
-          <div className="mb-8 mt-16 text-center">
+          <div className="mb-8 mt-8 md:mt-16 text-center">
+            <div className="flex justify-center mb-4">
+              <img src="/images/asset-align-logo.png" alt="AssetAlign Logo" className="h-16 md:h-20" />
+            </div>
             <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
           </div>
           
@@ -290,7 +293,7 @@ const Register = () => {
               
               <Button 
                 type="submit" 
-                className="w-full h-14 text-white rounded-full bg-[#10B981] hover:bg-[#10B981]/90"
+                className="w-full h-14 text-white rounded-full bg-[#10B981] hover:bg-[#0D9668] transition-colors duration-200 transform hover:scale-[1.02]"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? t("common.loading") : "Sign Up"}
