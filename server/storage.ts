@@ -249,7 +249,7 @@ export class MemStorage implements IStorage {
     const meeting3: InsertMeeting = {
       chamaId: createdChama3.id,
       title: "Property Acquisition Discussion",
-      date: new Date("2023-08-25T17:00:00"),
+      date: new Date("2025-04-25T17:00:00"),
       location: "Zoom",
       isVirtual: true,
       meetingLink: "https://zoom.us/j/987654321",
@@ -265,7 +265,7 @@ export class MemStorage implements IStorage {
       type: "real estate",
       amount: 800000,
       description: "Commercial property investment in Westlands area",
-      startDate: new Date("2023-01-15"),
+      startDate: new Date("2025-01-15"),
       expectedReturnRate: "12%",
       status: "active",
       currentValue: 864800, // 8.1% increase
@@ -278,7 +278,7 @@ export class MemStorage implements IStorage {
       type: "bonds",
       amount: 300000,
       description: "Government treasury bonds",
-      startDate: new Date("2023-02-10"),
+      startDate: new Date("2025-02-10"),
       expectedReturnRate: "10.5%",
       status: "active",
       currentValue: 310500, // 3.5% increase
@@ -291,7 +291,7 @@ export class MemStorage implements IStorage {
       type: "stocks",
       amount: 150000,
       description: "Investments in Safaricom shares",
-      startDate: new Date("2023-03-20"),
+      startDate: new Date("2025-03-20"),
       expectedReturnRate: "8%",
       status: "active",
       currentValue: 146850, // 2.1% decrease
@@ -312,7 +312,7 @@ export class MemStorage implements IStorage {
     const notification2: InsertNotification = {
       userId: createdUser.id,
       title: "Upcoming Meeting",
-      message: "You have a meeting for Maendeleo Savings Club on Aug 18, 2023 at 6:00 PM.",
+      message: "You have a meeting for Maendeleo Savings Club on Aug 18, 2025 at 6:00 PM.",
       type: "meeting",
       isRead: false,
       linkUrl: "/meetings",
