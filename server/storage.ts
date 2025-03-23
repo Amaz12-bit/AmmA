@@ -106,11 +106,11 @@ export class MemStorage implements IStorage {
   private initializeData() {
     // Create a demo user
     const user: InsertUser = {
-      username: "johndoe",
-      password: "password123", // In a real app, this would be hashed
-      email: "johndoe@example.com",
-      firstName: "John",
-      lastName: "Doe",
+      username: "demo",
+      password: "demo123", // In a real app, this would be hashed
+      email: "demo@example.com",
+      firstName: "Demo",
+      lastName: "User",
       phoneNumber: "+254712345678",
       preferredLanguage: "en",
     };
