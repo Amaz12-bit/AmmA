@@ -56,7 +56,7 @@ const Login = () => {
         title: "Login Successful",
         description: "Welcome back to AssetAlign!",
       });
-      navigate("/dashboard");
+      navigate("/");
     }
     
     setIsSubmitting(false);
