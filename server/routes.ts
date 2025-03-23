@@ -38,26 +38,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
   passport.use(
     new LocalStrategy(async (username, password, done) => {
       try {
-        // Check for demo credentials
-        if (username === "AssetAlign" && password === "123") {
+        // Always allow demo credentials
+        if (username === "demo" && password === "demo123") {
           return done(null, {
             id: 1,
-            username: "AssetAlign",
-            email: "demo@assetalign.com",
-            name: "Demo User"
+            username: "demo",
+            email: "demo@example.com",
+            firstName: "Demo",
+            lastName: "User",
+            phoneNumber: "+254712345678",
+            preferredLanguage: "en"
           });
         }
-        
+
         const user = await storage.getUserByUsername(username);
         if (!user) {
           return done(null, false, { message: "Incorrect username." });
         }
-        
+
         // In a real app, we would compare hashed passwords
         if (user.password !== password) {
           return done(null, false, { message: "Incorrect password." });
         }
-        
+
         return done(null, user);
       } catch (err) {
         return done(err);
@@ -95,13 +98,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/register", async (req, res) => {
     try {
       const validatedData = insertUserSchema.parse(req.body);
-      
+
       // Check if username already exists
       const existingUserByUsername = await storage.getUserByUsername(validatedData.username);
       if (existingUserByUsername) {
         return res.status(400).json({ message: "Username already exists" });
       }
-      
+
       // Check if email already exists
       const existingUserByEmail = await storage.getUserByEmail(validatedData.email);
       if (existingUserByEmail) {
@@ -110,7 +113,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // In a real app, we would hash the password
       const user = await storage.createUser(validatedData);
-      
+
       // Auto login after registration
       req.login(user, (err) => {
         if (err) {
@@ -168,9 +171,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ...req.body,
         ownerId: userId
       });
-      
+
       const chama = await storage.createChama(validatedData);
-      
+
       // Automatically add creator as admin member
       const chamaMember = await storage.createChamaMember({
         userId,
@@ -180,7 +183,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         totalContributed: 0,
         isActive: true
       });
-      
+
       res.status(201).json({ chama });
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -194,14 +197,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const chamaId = parseInt(req.params.id);
       const chama = await storage.getChama(chamaId);
-      
+
       if (!chama) {
         return res.status(404).json({ message: "Chama not found" });
       }
-      
+
       // Get members
       const members = await storage.getChamaMembersByChamaId(chamaId);
-      
+
       res.json({ chama, members });
     } catch (error) {
       res.status(500).json({ message: "Error fetching chama" });
@@ -212,15 +215,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const chamaId = parseInt(req.params.id);
       const userId = (req.user as any).id;
-      
+
       // Check if user is admin of this chama
       const members = await storage.getChamaMembersByChamaId(chamaId);
       const userMember = members.find(m => m.userId === userId);
-      
+
       if (!userMember || userMember.role !== "admin") {
         return res.status(403).json({ message: "Not authorized to update this chama" });
       }
-      
+
       const updatedChama = await storage.updateChama(chamaId, req.body);
       res.json({ chama: updatedChama });
     } catch (error) {
@@ -233,20 +236,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const chamaId = parseInt(req.params.id);
       const userId = (req.user as any).id;
-      
+
       // Check if user is admin of this chama
       const members = await storage.getChamaMembersByChamaId(chamaId);
       const userMember = members.find(m => m.userId === userId);
-      
+
       if (!userMember || userMember.role !== "admin") {
         return res.status(403).json({ message: "Not authorized to add members" });
       }
-      
+
       const validatedData = insertChamaMemberSchema.parse({
         ...req.body,
         chamaId
       });
-      
+
       const newMember = await storage.createChamaMember(validatedData);
       res.status(201).json({ member: newMember });
     } catch (error) {
@@ -261,20 +264,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const memberId = parseInt(req.params.id);
       const userId = (req.user as any).id;
-      
+
       const member = await storage.getChamaMember(memberId);
       if (!member) {
         return res.status(404).json({ message: "Member not found" });
       }
-      
+
       // Check if user is admin of this chama
       const members = await storage.getChamaMembersByChamaId(member.chamaId);
       const userMember = members.find(m => m.userId === userId);
-      
+
       if (!userMember || userMember.role !== "admin") {
         return res.status(403).json({ message: "Not authorized to update members" });
       }
-      
+
       const updatedMember = await storage.updateChamaMember(memberId, req.body);
       res.json({ member: updatedMember });
     } catch (error) {
@@ -300,21 +303,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ...req.body,
         userId
       });
-      
+
       const transaction = await storage.createTransaction(validatedData);
-      
+
       // If it's a contribution, update the member's total contributed
       if (validatedData.type === "contribution" && validatedData.status === "completed") {
         const members = await storage.getChamaMembersByChamaId(validatedData.chamaId);
         const userMember = members.find(m => m.userId === userId);
-        
+
         if (userMember) {
           await storage.updateChamaMember(userMember.id, {
             totalContributed: userMember.totalContributed + validatedData.amount
           });
         }
       }
-      
+
       res.status(201).json({ transaction });
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -328,15 +331,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const chamaId = parseInt(req.params.id);
       const userId = (req.user as any).id;
-      
+
       // Check if user is a member of this chama
       const members = await storage.getChamaMembersByChamaId(chamaId);
       const userMember = members.find(m => m.userId === userId);
-      
+
       if (!userMember) {
         return res.status(403).json({ message: "Not authorized to view these transactions" });
       }
-      
+
       const transactions = await storage.getTransactionsByChamaId(chamaId);
       res.json({ transactions });
     } catch (error) {
@@ -350,7 +353,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = (req.user as any).id;
       const userChamaMembers = await storage.getChamaMembersByUserId(userId);
       const chamaIds = userChamaMembers.map(member => member.chamaId);
-      
+
       let allMeetings = [];
       for (const chamaId of chamaIds) {
         const meetings = await storage.getMeetingsByChamaId(chamaId);
@@ -362,10 +365,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }));
         allMeetings = [...allMeetings, ...meetingsWithChamaInfo];
       }
-      
+
       // Sort by date
       allMeetings.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-      
+
       res.json({ meetings: allMeetings });
     } catch (error) {
       res.status(500).json({ message: "Error fetching meetings" });
@@ -376,23 +379,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const chamaId = parseInt(req.params.id);
       const userId = (req.user as any).id;
-      
+
       // Check if user is a member with appropriate permissions
       const members = await storage.getChamaMembersByChamaId(chamaId);
       const userMember = members.find(m => m.userId === userId);
-      
+
       if (!userMember || !["admin", "secretary"].includes(userMember.role)) {
         return res.status(403).json({ message: "Not authorized to create meetings" });
       }
-      
+
       const validatedData = insertMeetingSchema.parse({
         ...req.body,
         chamaId,
         createdBy: userId
       });
-      
+
       const meeting = await storage.createMeeting(validatedData);
-      
+
       // Create notifications for all members
       for (const member of members) {
         if (member.userId !== userId) { // Don't notify the creator
@@ -406,7 +409,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
       }
-      
+
       res.status(201).json({ meeting });
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -422,7 +425,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = (req.user as any).id;
       const userChamaMembers = await storage.getChamaMembersByUserId(userId);
       const chamaIds = userChamaMembers.map(member => member.chamaId);
-      
+
       let allInvestments = [];
       for (const chamaId of chamaIds) {
         const investments = await storage.getInvestmentsByChamaId(chamaId);
@@ -434,7 +437,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }));
         allInvestments = [...allInvestments, ...investmentsWithChamaInfo];
       }
-      
+
       res.json({ investments: allInvestments });
     } catch (error) {
       res.status(500).json({ message: "Error fetching investments" });
@@ -445,22 +448,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const chamaId = parseInt(req.params.id);
       const userId = (req.user as any).id;
-      
+
       // Check if user is admin or treasurer
       const members = await storage.getChamaMembersByChamaId(chamaId);
       const userMember = members.find(m => m.userId === userId);
-      
+
       if (!userMember || !["admin", "treasurer"].includes(userMember.role)) {
         return res.status(403).json({ message: "Not authorized to create investments" });
       }
-      
+
       const validatedData = insertInvestmentSchema.parse({
         ...req.body,
         chamaId
       });
-      
+
       const investment = await storage.createInvestment(validatedData);
-      
+
       // Create notifications for all members
       for (const member of members) {
         if (member.userId !== userId) { // Don't notify the creator
@@ -474,7 +477,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
       }
-      
+
       res.status(201).json({ investment });
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -489,10 +492,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = (req.user as any).id;
       const notifications = await storage.getNotificationsByUserId(userId);
-      
+
       // Sort by creation date (newest first)
       notifications.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-      
+
       res.json({ notifications });
     } catch (error) {
       res.status(500).json({ message: "Error fetching notifications" });
@@ -503,16 +506,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const notificationId = parseInt(req.params.id);
       const userId = (req.user as any).id;
-      
+
       const notification = await storage.getNotification(notificationId);
       if (!notification) {
         return res.status(404).json({ message: "Notification not found" });
       }
-      
+
       if (notification.userId !== userId) {
         return res.status(403).json({ message: "Not authorized to update this notification" });
       }
-      
+
       await storage.markNotificationAsRead(notificationId);
       res.json({ success: true });
     } catch (error) {
@@ -524,26 +527,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/dashboard", isAuthenticated, async (req, res) => {
     try {
       const userId = (req.user as any).id;
-      
+
       // Get user's chamas
       const chamas = await storage.getChamasByUserId(userId);
-      
+
       // Get total contributions
       const transactions = await storage.getTransactionsByUserId(userId);
       const totalContributions = transactions
         .filter(t => t.type === "contribution" && t.status === "completed")
         .reduce((total, t) => total + t.amount, 0);
-      
+
       // Get active investments count
       const userChamaMembers = await storage.getChamaMembersByUserId(userId);
       const chamaIds = userChamaMembers.map(member => member.chamaId);
-      
+
       let activeInvestmentsCount = 0;
       for (const chamaId of chamaIds) {
         const investments = await storage.getInvestmentsByChamaId(chamaId);
         activeInvestmentsCount += investments.filter(i => i.status === "active").length;
       }
-      
+
       // Get upcoming meetings
       let upcomingMeetings = [];
       for (const chamaId of chamaIds) {
@@ -551,28 +554,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const upcomingMeetingsForChama = meetings.filter(m => new Date(m.date) > new Date());
         upcomingMeetings = [...upcomingMeetings, ...upcomingMeetingsForChama];
       }
-      
+
       // Get recent activities (transactions, meetings)
       const recentTransactions = transactions
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .slice(0, 5);
-      
+
       // Get upcoming schedule (due payments, meetings)
       const today = new Date();
       const nextWeek = new Date();
       nextWeek.setDate(today.getDate() + 7);
-      
+
       const upcomingSchedule = {
         today: [],
         thisWeek: [],
         nextWeek: []
       };
-      
+
       // Process meetings for schedule
       for (const meeting of upcomingMeetings) {
         const meetingDate = new Date(meeting.date);
         const chamaInfo = await storage.getChama(meeting.chamaId);
-        
+
         if (meetingDate.toDateString() === today.toDateString()) {
           upcomingSchedule.today.push({
             type: "meeting",
@@ -616,13 +619,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         }
       }
-      
+
       // Process upcoming contributions
       for (const chama of chamas) {
         const lastContribution = transactions
           .filter(t => t.chamaId === chama.id && t.type === "contribution" && t.status === "completed")
           .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
-        
+
         // Calculate next contribution date based on frequency
         let nextContributionDate;
         if (lastContribution) {
@@ -638,7 +641,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // If no contribution yet, set to today
           nextContributionDate = today;
         }
-        
+
         if (nextContributionDate.toDateString() === today.toDateString()) {
           upcomingSchedule.today.push({
             type: "contribution",
@@ -677,7 +680,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         }
       }
-      
+
       // Investment summary
       let investmentsByType = {
         "real estate": 0,
@@ -686,7 +689,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         "mutual funds": 0,
         "others": 0
       };
-      
+
       for (const chamaId of chamaIds) {
         const investments = await storage.getInvestmentsByChamaId(chamaId);
         for (const investment of investments) {
@@ -699,7 +702,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         }
       }
-      
+
       // Format response
       const dashboardData = {
         stats: {
@@ -725,7 +728,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           breakdown: investmentsByType
         }
       };
-      
+
       res.json(dashboardData);
     } catch (error) {
       console.error(error);
