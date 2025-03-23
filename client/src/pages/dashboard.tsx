@@ -137,7 +137,7 @@ const Dashboard = () => {
               iconBgColor="bg-primary-50"
               iconColor="text-primary-700"
               title={t("dashboard.quickStats.activeChamas")}
-              value={data?.stats.activeChamasCount || 0}
+              value={dashboardData?.stats.activeChamasCount || 0}
               linkLabel={t("common.viewAll")}
               linkHref="/chamas"
             />
@@ -146,7 +146,7 @@ const Dashboard = () => {
               iconBgColor="bg-secondary-50"
               iconColor="text-secondary-700"
               title={t("dashboard.quickStats.totalContributions")}
-              value={data?.stats.totalContributions || 0}
+              value={dashboardData?.stats.totalContributions || 0}
               linkLabel={t("common.viewDetails")}
               linkHref="/transactions"
             />
@@ -155,7 +155,7 @@ const Dashboard = () => {
               iconBgColor="bg-accent-50"
               iconColor="text-accent-500"
               title={t("dashboard.quickStats.activeInvestments")}
-              value={data?.stats.activeInvestmentsCount || 0}
+              value={dashboardData?.stats.activeInvestmentsCount || 0}
               linkLabel={t("common.viewAll")}
               linkHref="/investments"
             />
@@ -164,7 +164,7 @@ const Dashboard = () => {
               iconBgColor="bg-info-50"
               iconColor="text-info"
               title={t("dashboard.quickStats.upcomingMeetings")}
-              value={data?.stats.upcomingMeetingsCount || 0}
+              value={dashboardData?.stats.upcomingMeetingsCount || 0}
               linkLabel={t("common.viewSchedule")}
               linkHref="/meetings"
             />
@@ -211,12 +211,12 @@ const Dashboard = () => {
           </>
         ) : (
           <>
-            {data?.chamas.map((chama) => (
+            {dashboardData?.chamas.map((chama) => (
               <ChamaCard
                 key={chama.id}
                 chama={chama}
                 // Find member info for this user in this chama
-                memberInfo={data?.chamas.find(c => c.id === chama.id)?.members?.find(m => m.userId === user?.id)}
+                memberInfo={dashboardData?.chamas.find(c => c.id === chama.id)?.members?.find(m => m.userId === user?.id)}
                 // Get next contribution (placeholder for now)
                 nextContribution={{
                   date: new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000).toISOString(),
@@ -273,7 +273,7 @@ const Dashboard = () => {
             </div>
           </div>
           <ActivityList
-            activities={data?.recentActivities || []}
+            activities={dashboardData?.recentActivities || []}
             isLoading={isLoading}
           />
           <div className="bg-neutral-50 px-5 py-3">
@@ -303,7 +303,7 @@ const Dashboard = () => {
             </div>
           </div>
           <ScheduleList
-            schedule={data?.upcomingSchedule || { today: [], thisWeek: [], nextWeek: [] }}
+            schedule={dashboardData?.upcomingSchedule || { today: [], thisWeek: [], nextWeek: [] }}
             isLoading={isLoading}
           />
           <div className="bg-neutral-50 px-5 py-3">
@@ -323,7 +323,7 @@ const Dashboard = () => {
         {t("dashboard.investmentPerformance")}
       </h2>
       <InvestmentChart
-        summary={data?.investmentSummary || {
+        summary={dashboardData?.investmentSummary || {
           total: 0,
           breakdown: {
             'real estate': 0,
